@@ -25,6 +25,6 @@ public class TargetCamera_Platform : MonoBehaviour
         targetPosition.y += target.position.y;
         targetPosition.z += target.position.z;
 
-        transform.position = Vector3.Lerp(transform.position, targetPosition, lerpTime);
+        transform.position = transform.position;
     }
 }

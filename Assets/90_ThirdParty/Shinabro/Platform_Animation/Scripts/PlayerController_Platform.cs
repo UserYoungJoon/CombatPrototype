@@ -1,6 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController_Platform : MonoBehaviour
 {
@@ -28,31 +29,19 @@ public class PlayerController_Platform : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
 
         if (!isJump)
-        {            
+        {
             Attack();
-            
             Dodge();
-            
             Jump();
-
             Block();
-
             Crouch();
-
             Skill1();
-            
             Skill2();
-            
             Skill3();
-            
             Skill4();
-            
             Skill5();
-            
             Skill6();
-            
             Skill7();
-            
             Skill8();
         }
     }
@@ -60,24 +49,27 @@ public class PlayerController_Platform : MonoBehaviour
     Quaternion rot;
     bool isRun;
 
-    
+
     void Rotate()
     {
-        if (Input.GetKey(KeyCode.D))
-        {            
-            Move();            
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.dKey.isPressed)
+        {
+            Move();
             rot = Quaternion.LookRotation(Vector3.right);
         }
 
-        
-        else if (Input.GetKey(KeyCode.A))
-        {            
+
+        else if (keyboard.aKey.isPressed)
+        {
             Move();
             rot = Quaternion.LookRotation(Vector3.left);
         }
 
         else
-        {            
+        {
             anim.SetBool("Run", false);
                 anim.SetBool("Walk", false);
         }
@@ -86,20 +78,23 @@ public class PlayerController_Platform : MonoBehaviour
 
     }
 
-    
+
     void Move()
     {
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
         if (isJump)
-        {            
-            transform.position += transform.forward * speed_move * Time.deltaTime;            
+        {
+            transform.position += transform.forward * speed_move * Time.deltaTime;
             anim.SetBool("Run", false);
                 anim.SetBool("Walk", false);
 
         }
         else
-        {            
+        {
             anim.SetBool("Run", true);
-                anim.SetBool("Walk", Input.GetKey(KeyCode.LeftShift));
+                anim.SetBool("Walk", keyboard.leftShiftKey.isPressed);
         }
     }
 
@@ -107,95 +102,104 @@ public class PlayerController_Platform : MonoBehaviour
     float timer;
     bool isTimer;
 
-    
+
     void Attack()
     {
-        
+        var mouse = Mouse.current;
+        if (mouse == null) return;
+
+
         if (isTimer)
         {
             timer += Time.deltaTime;
         }
 
-        
-        if (Input.GetMouseButtonDown(0))
+
+        if (mouse.leftButton.wasPressedThisFrame)
         {
             switch (clickCount)
             {
-                
+
                 case 0:
-                    
+
                     anim.SetTrigger("Attack1");
-                    
+
                     isTimer = true;
-                    
+
                     clickCount++;
                     break;
 
-                
+
                 case 1:
-                    
+
                     if (timer <= term)
-                    {                        
+                    {
                         anim.SetTrigger("Attack2");
-                        
+
                         clickCount++;
                     }
 
-                    
+
                     else
-                    {                        
+                    {
                         anim.SetTrigger("Attack1");
-                        
+
                         clickCount = 1;
                     }
 
-                    
+
                     timer = 0;
                     break;
 
-                
+
                 case 2:
-                    
+
                     if (timer <= term)
-                    {                        
+                    {
                         anim.SetTrigger("Attack3");
-                        
+
                         clickCount = 0;
-                        
+
                         isTimer = false;
                     }
 
-                    
+
                     else
-                    {                        
+                    {
                         anim.SetTrigger("Attack1");
-                        
+
                         clickCount = 1;
                     }
-                
+
                     timer = 0;
                     break;
             }
         }
     }
 
-    
+
     void Dodge()
     {
-        
-        if (Input.GetKeyDown(KeyCode.Space))
-        {            
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+
+        if (keyboard.spaceKey.wasPressedThisFrame)
+        {
             anim.SetTrigger("Dodge");
         }
     }
 
     void Block()
     {
-        if (Input.GetMouseButtonDown(1))
+        var mouse = Mouse.current;
+        if (mouse == null) return;
+
+        if (mouse.rightButton.wasPressedThisFrame)
         {
             anim.SetBool("Block", true);
         }
-        if (Input.GetMouseButtonUp(1))
+        if (mouse.rightButton.wasReleasedThisFrame)
         {
             anim.SetBool("Block", false);
         }
@@ -203,11 +207,14 @@ public class PlayerController_Platform : MonoBehaviour
 
     void Crouch()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.sKey.wasPressedThisFrame)
         {
             anim.SetBool("Crouch", true);
         }
-        if (Input.GetKeyUp(KeyCode.S))
+        if (keyboard.sKey.wasReleasedThisFrame)
         {
             anim.SetBool("Crouch", false);
         }
@@ -216,9 +223,12 @@ public class PlayerController_Platform : MonoBehaviour
 
     void Jump()
     {
-        
-        if (Input.GetKeyDown(KeyCode.W))
-        {            
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+
+        if (keyboard.wKey.wasPressedThisFrame)
+        {
             anim.SetBool("Block", false);
             anim.SetBool("Crouch", false);
             anim.SetTrigger("Jump");
@@ -227,7 +237,7 @@ public class PlayerController_Platform : MonoBehaviour
         }
     }
 
-    
+
     void JumpEnd()
     {
         isJump = false;
@@ -236,7 +246,10 @@ public class PlayerController_Platform : MonoBehaviour
     // Skill1
     void Skill1()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.digit1Key.wasPressedThisFrame)
         {
             // Play Skill1 animation
             anim.SetTrigger("Skill1");
@@ -245,7 +258,10 @@ public class PlayerController_Platform : MonoBehaviour
     // Skill2
     void Skill2()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.digit2Key.wasPressedThisFrame)
         {
             // Play Skill2 animation
             anim.SetTrigger("Skill2");
@@ -254,7 +270,10 @@ public class PlayerController_Platform : MonoBehaviour
     // Skill3
     void Skill3()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.digit3Key.wasPressedThisFrame)
         {
             // Play Skill3 animation
             anim.SetTrigger("Skill3");
@@ -263,7 +282,10 @@ public class PlayerController_Platform : MonoBehaviour
     // Skill4
     void Skill4()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.digit4Key.wasPressedThisFrame)
         {
             // Play Skill4 animation
             anim.SetTrigger("Skill4");
@@ -272,7 +294,10 @@ public class PlayerController_Platform : MonoBehaviour
     // Skill5
     void Skill5()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.digit5Key.wasPressedThisFrame)
         {
             // Play Skill5 animation
             anim.SetTrigger("Skill5");
@@ -281,7 +306,10 @@ public class PlayerController_Platform : MonoBehaviour
     // Skill6
     void Skill6()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha6))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.digit6Key.wasPressedThisFrame)
         {
             // Play Skill6 animation
             anim.SetTrigger("Skill6");
@@ -290,7 +318,10 @@ public class PlayerController_Platform : MonoBehaviour
     // Skill7
     void Skill7()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha7))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.digit7Key.wasPressedThisFrame)
         {
             // Play Skill7 animation
             anim.SetTrigger("Skill7");
@@ -299,7 +330,10 @@ public class PlayerController_Platform : MonoBehaviour
     // Skill8
     void Skill8()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha8))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.digit8Key.wasPressedThisFrame)
         {
             // Play Skill8 animation
             anim.SetTrigger("Skill8");
