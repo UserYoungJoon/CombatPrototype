@@ -1,30 +1,52 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
 
-    private Rigidbody2D rb;
+    [Header("Animation")]
+    [SerializeField] private string[] animationTriggers = { "Attack1", "Attack2", "Attack3", "Block", "DodgeAttack" };
+
+    private Animator animator;
     private float moveInput;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        // New Input System 사용
         moveInput = 0f;
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed)
             moveInput = -1f;
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        else if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed)
             moveInput = 1f;
+
+        // H키 누르면 랜덤 애니메이션 재생
+        if (keyboard.hKey.wasPressedThisFrame)
+        {
+            PlayRandomAnimation();
+        }
+    }
+
+    private void PlayRandomAnimation()
+    {
+        if (animator == null) return;
+
+        int randomIndex = Random.Range(0, animationTriggers.Length);
+        animator.SetTrigger(animationTriggers[randomIndex]);
     }
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        transform.Translate(Vector2.right * moveInput * moveSpeed * Time.fixedDeltaTime);
     }
 }

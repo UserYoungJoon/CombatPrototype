@@ -529,22 +529,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5697291964440159838}
   m_LocalEulerAnglesHint: {x: -71.5, y: 148, z: -172}
---- !u!1 &2553231012164457385
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8872852241552352440}
-  m_Layer: 0
-  m_Name: Player_Sword&Shield
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &2652941368415993939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1583,6 +1567,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5973038607239528984}
   - component: {fileID: 5973038607246699924}
+  - component: {fileID: 5973038607246699926}
+  - component: {fileID: 5973038607246699927}
   m_Layer: 0
   m_Name: Stander
   m_TagString: Untagged
@@ -1694,14 +1680,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5973038607239438328}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5973038607239529076}
   - {fileID: 5973038607239528990}
-  m_Father: {fileID: 8872852241552352440}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5973038607239528988
 Transform:
@@ -2526,6 +2512,46 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5973038607246699926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5973038607239438328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508122f313b50e040a971a01d12d38c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  moveSpeed: 5
+  animationTriggers:
+  - Attack1
+  - Attack2
+  - Attack3
+  - Block
+  - DodgeAttack
+--- !u!65 &5973038607246699927
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5973038607239438328}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &5973038607251002196
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -2654,27 +2680,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4156547705330166460}
   m_LocalEulerAnglesHint: {x: -1.761, y: -4.426, z: -5.018}
---- !u!4 &8872852241552352440
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2553231012164457385}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5973038607239528984}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2134367286}
   - {fileID: 508624037}
-  - {fileID: 8872852241552352440}
+  - {fileID: 5973038607239528984}
   - {fileID: 192791102}
