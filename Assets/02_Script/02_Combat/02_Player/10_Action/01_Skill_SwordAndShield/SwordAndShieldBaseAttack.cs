@@ -41,7 +41,9 @@ namespace Skill.SwordAndShield
 
         protected override void OnAnimatorEvent(OnAnimatorEvent evt)
         {
-            Debug.Log($"{GameManager.Instance.enemy.gameObject.name} Hit by {player.gameObject.name}");
+            var hitPos = player.AttackPoint.position;
+            var dir = player.ActionComponent.Direction;
+            GameManager.Instance.ParticleManager.PlayBasicEffect(hitPos, dir);
         }
 
         protected override void OnEndSkill()

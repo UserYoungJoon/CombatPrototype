@@ -12,6 +12,9 @@ public class PlayerUnit : Unit
     public PlayerState StateComponent => playerState;
     public EventBus EventBus => eventBus;
 
+    [SerializeField] private Transform attackPoint;
+    public Transform AttackPoint => attackPoint;
+
     private void Awake()
     {
         playerController.Init();

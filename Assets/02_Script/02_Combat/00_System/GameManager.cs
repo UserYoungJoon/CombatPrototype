@@ -7,8 +7,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] InputManager inputManager;
     [SerializeField] EffectManager effectManager;
+    [SerializeField] ParticleManager particleManager;
     public InputManager InputManager => inputManager;
     public EffectManager EffectManager => effectManager;
+    public ParticleManager ParticleManager => particleManager;
 
     public Unit enemy;
 
@@ -17,5 +19,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
         inputManager.Init();
         effectManager.Init();
+        particleManager.Init();
     }
 }

@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &186206077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 186206078}
+  m_Layer: 0
+  m_Name: Effects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &186206078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186206077}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &377444434
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   inputManager: {fileID: 1230739126}
   effectManager: {fileID: 1950228104}
+  particleManager: {fileID: 1525795972}
   enemy: {fileID: 5467629474456040617}
 --- !u!114 &566245580
 MonoBehaviour:
@@ -505,6 +537,7 @@ Transform:
   - {fileID: 566245578}
   - {fileID: 1230739125}
   - {fileID: 1950228103}
+  - {fileID: 1525795971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1205478756
@@ -641,6 +674,7 @@ MonoBehaviour:
   playerAction: {fileID: 1205478759}
   playerState: {fileID: 1205478764}
   eventBus: {fileID: 1205478763}
+  attackPoint: {fileID: 7897615286375556263}
 --- !u!1 &1214485498
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,6 +1336,77 @@ Transform:
   m_Children: []
   m_Father: {fileID: 568591188}
   m_LocalEulerAnglesHint: {x: 0, y: 23.534, z: 0}
+--- !u!1 &1525795970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1525795971}
+  - component: {fileID: 1525795973}
+  - component: {fileID: 1525795972}
+  m_Layer: 0
+  m_Name: ParticleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1525795971
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525795970}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 696150942}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1525795972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525795970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b3c3d6baa57624285020ac5a448e51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticleManager
+  baseConfig:
+    particleCount: 20
+    lifetime: 0.3
+    startSpeed: 70
+    maxDistance: 1
+    coneAngle: 25
+    startSize: 0.15
+    endSize: 0.05
+    colorMin: {r: 1, g: 0.9, b: 0.2, a: 1}
+    colorMax: {r: 1, g: 0.5, b: 0, a: 1}
+    fadeOutAlpha: 0
+    speedEase: 3
+    sizeEase: 2
+    alphaEase: 1
+--- !u!114 &1525795973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525795970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e40b6d91f9c70e4cb481cca76954428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventBus
 --- !u!1 &1693130691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,7 +1693,7 @@ GameObject:
   - component: {fileID: 1950228105}
   - component: {fileID: 1950228104}
   m_Layer: 0
-  m_Name: Effectmanager
+  m_Name: EffectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1621,6 +1726,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91e0affdba139e4b8580ebcc035b387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EffectManager
+  breakEffectPrefab: {fileID: 6982569389278834628, guid: 8ddcc3758b853e14584e7f7bf80e7e84, type: 3}
+  jumpEffectPrefab: {fileID: 164276682493741378, guid: 1c679ab4f8d5d6b4b9e5117d7da829e8, type: 3}
+  landingEffectPrefab: {fileID: 3531371342157543700, guid: 8fc56561726d2144aa2703413241ffe0, type: 3}
+  effectTransform: {fileID: 186206078}
+  footOffset: 0.3
 --- !u!114 &1950228105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5971,3 +6081,4 @@ SceneRoots:
   - {fileID: 377444438}
   - {fileID: 2044746177}
   - {fileID: 1214485501}
+  - {fileID: 186206078}

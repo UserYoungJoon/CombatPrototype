@@ -9,6 +9,8 @@ public class MoveLeftAction : ActionBase
         player.StateComponent.ChangeState(ePlayerState.Move);
         player.ActionComponent.SetLookDir(-1);
         player.ActionComponent.Play(ePlayerMotionType.Run, true);
+
+        GameManager.Instance.EffectManager.PlayBreakEffect(player.transform.position, -1);
     }
 
     protected override void OnKeyHolding()
