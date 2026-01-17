@@ -28,15 +28,15 @@ public class PlayerState : MonoBehaviour
         switch (newState)
         {
             case ePlayerState.Idle:
-                playerAction.Play(ePlayerMotion.Idle);
+                playerAction.Play(ePlayerMotionType.Idle, true);
                 break;
             case ePlayerState.Move:
                 break;
             case ePlayerState.Jump:
                 break;
-            case ePlayerState.AttackCanMove:
+            case ePlayerState.SkillCanMove:
                 break;
-            case ePlayerState.Attack:
+            case ePlayerState.Skill:
                 break;
             case ePlayerState.Hit:
                 break;

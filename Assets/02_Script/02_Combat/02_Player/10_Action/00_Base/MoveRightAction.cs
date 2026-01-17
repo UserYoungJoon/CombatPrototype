@@ -7,7 +7,7 @@ public class MoveRightAction : ActionBase
     protected override void OnStart()
     {
         player.ActionComponent.SetLookDir(1);
-        player.ActionComponent.Play(ePlayerMotion.Run);
+        player.ActionComponent.Play(ePlayerMotionType.Run, true);
     }
 
     protected override void OnUpdate()
@@ -17,6 +17,6 @@ public class MoveRightAction : ActionBase
 
     protected override void OnEnd()
     {
-        player.ActionComponent.Play(ePlayerMotion.Idle);
+        player.ActionComponent.Play(ePlayerMotionType.Idle, true);
     }
 }

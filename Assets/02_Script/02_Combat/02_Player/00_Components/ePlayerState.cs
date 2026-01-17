@@ -3,7 +3,7 @@ public enum ePlayerState
     Idle,
     Move,
     Jump,
-    Attack,
-    AttackCanMove,
+    Skill,
+    SkillCanMove,
     Hit
 }

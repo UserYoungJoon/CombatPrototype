@@ -19,6 +19,6 @@ public abstract class SkillBase : ActionBase
 
     public override bool CanStart()
     {
-        return Time.time >= lastUsedTime + cooldownTime;
+        return (Time.time >= lastUsedTime + cooldownTime) && (player.StateComponent.State != ePlayerState.Skill);
     }
 }

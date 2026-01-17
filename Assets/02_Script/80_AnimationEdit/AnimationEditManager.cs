@@ -27,7 +27,7 @@ public class AnimationEditManager : MonoBehaviour
 
     private AnimationClip[] clips;
     private AnimationClip selectedClip;
-    private ePlayerMotion selectedMotion;
+    private ePlayerMotionType selectedMotion;
     private AnimationEventData currentEventData;
 
     private float normalizedTime;
@@ -482,11 +482,11 @@ public class AnimationEditManager : MonoBehaviour
     private void SetupMotionDropdown()
     {
         motionDropdown.ClearOptions();
-        var options = System.Enum.GetNames(typeof(ePlayerMotion)).ToList();
+        var options = System.Enum.GetNames(typeof(ePlayerMotionType)).ToList();
         motionDropdown.AddOptions(options);
         motionDropdown.onValueChanged.AddListener(OnMotionChanged);
 
-        selectedMotion = (ePlayerMotion)0;
+        selectedMotion = (ePlayerMotionType)0;
         LoadEventData();
     }
 
@@ -513,7 +513,7 @@ public class AnimationEditManager : MonoBehaviour
 
     private void OnMotionChanged(int index)
     {
-        selectedMotion = (ePlayerMotion)index;
+        selectedMotion = (ePlayerMotionType)index;
         normalizedTime = 0f;
         timelineSlider.SetValueWithoutNotify(0f);
         UpdateSelectedClip();

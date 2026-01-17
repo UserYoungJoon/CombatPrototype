@@ -13,10 +13,10 @@ namespace Skill.SwordAndShield
     {
         /// <summary> 해당 시간 안에 다음 공격으로 넘어가지 않으면 공격 인덱스를 초기화 </summary>
         private readonly float RESET_TIME = 1.0f;
-        private readonly ePlayerMotion[] MOTIONS = new ePlayerMotion[]
+        private readonly ePlayerMotionType[] MOTIONS = new ePlayerMotionType[]
         {
-            ePlayerMotion.Attack1,
-            ePlayerMotion.Skill7_Around,
+            ePlayerMotionType.Attack1,
+            ePlayerMotionType.Skill7_Around,
         };
         private int attackIndex = 0;
 
@@ -32,7 +32,7 @@ namespace Skill.SwordAndShield
                 attackIndex = 0;
             }
 
-            base.player.ActionComponent.Play(MOTIONS[attackIndex], player.AttackSpeed);
+            base.player.ActionComponent.Play(MOTIONS[attackIndex], false, player.AttackSpeed);
             cooldownTime = 1f / player.AttackSpeed;
 
             attackIndex = (attackIndex + 1) % MOTIONS.Length;

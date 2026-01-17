@@ -1,4 +1,4 @@
-public enum ePlayerMotion
+public enum ePlayerMotionType
 {
     Idle,
     Run,

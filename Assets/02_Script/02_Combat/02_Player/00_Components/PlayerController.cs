@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     private Dictionary<Key, PlayerCommand> commandDict = new();
     private Dictionary<eActionCode, ActionBase> actionDict = new();
-    private HashSet<ActionBase> playingActions = new();
+    private ActionBase playingAction;
     private Key pendingKey;
     private Keyboard keyboard;
 
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         // - 임시 로직, 생성자에 Player 주입하는 형식이 올바름
         actionDict[eActionCode.MoveLeft].Init(player);
         actionDict[eActionCode.MoveRight].Init(player);
-        actionDict[eActionCode.SwordAndShield_BaseAttack].Init(player); 
+        actionDict[eActionCode.SwordAndShield_BaseAttack].Init(player);
 
         var eventBus = GameManager.Instance.InputManager.EventBus;
         eventBus.ConnectEvent<OnKeyDown>(OnKeyDown);
@@ -43,45 +43,57 @@ public class PlayerController : MonoBehaviour
     private void OnKeyDown(OnKeyDown evt)
     {
         Key key = evt.Key;
-        if (commandDict.ContainsKey(key) is false) return;
+        if (TryGetAction(key, out var action) is false) return;
 
-        PlayerCommand command = commandDict[key];
-        if (command.Type == ePlayerCommand.None) return;
-
-        var action = actionDict[(eActionCode)command.Code];
-        if (action == null) return;
-
-        if (player.StateComponent.State is ePlayerState.Attack) return;
-
+        if (player.StateComponent.State is ePlayerState.Skill) return;
+        if (action.IsRunning) return;
+        if (action.CanStart() is false) return;
         action.Start();
-        playingActions.Add(action);
+        playingAction = action;
     }
 
     private void OnKeyHolding(OnKeyHolding evt)
     {
-        pendingKey = evt.Key;
-        if (commandDict.ContainsKey(pendingKey) is false) return;
-        PlayerCommand command = commandDict[pendingKey];
-
-        if (command.Type == ePlayerCommand.None) return;
-        var action = actionDict[(eActionCode)command.Code];
-
-        if (action == null) return;
+        Key key = evt.Key;
+        if (TryGetAction(key, out var action) is false) return;
+        if (action.IsRunning is false) return;
         action.Update();
     }
 
     private void OnKeyUp(OnKeyUp evt)
     {
-        Key key = evt.Key;
-        if (commandDict.ContainsKey(key) is false) return;
+        if (TryGetAction(evt.Key, out var action) is false) return;
+        action.End();
+        playingAction = null;
+    }
+
+    public void QuitCurrentSkill()
+    {
+        if (playingAction != null)
+        {
+            playingAction.End();
+            playingAction = null;
+        }
+
+        if (pendingKey != Key.None)
+        {
+            OnKeyUp(new OnKeyUp(pendingKey));
+        }
+    }
+
+    private bool TryGetAction(Key key, out ActionBase action)
+    {
+        action = null;
+
+        if (commandDict.ContainsKey(key) is false) return false;
 
         PlayerCommand command = commandDict[key];
-        if (command.Type == ePlayerCommand.None) return;
+        if (command.Type == ePlayerCommand.None) return false;
 
-        var action = actionDict[(eActionCode)command.Code];
-        if (action == null) return;
-        action.End();
-        playingActions.Remove(action);
+        action = actionDict[(eActionCode)command.Code];
+        if (action == null) return false;
+        
+        return true;
     }
 
     private void OnDestroy()

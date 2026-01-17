@@ -4,6 +4,9 @@ public abstract class ActionBase
 {
     protected PlayerUnit player;
 
+    private bool isRunning = false;
+    public bool IsRunning => isRunning;
+
     public void Init(PlayerUnit player)
     {
         this.player = player;
@@ -12,6 +15,7 @@ public abstract class ActionBase
 
     public void Start()
     {
+        isRunning = true;
         OnStart();
     }
 
@@ -22,11 +26,13 @@ public abstract class ActionBase
 
     public void End()
     {
+        isRunning = false;
         OnEnd();
     }
 
     public void Aborted()
     {
+        isRunning = false;
         OnAborted();
     }
 
