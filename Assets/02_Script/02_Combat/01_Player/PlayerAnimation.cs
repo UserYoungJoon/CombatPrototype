@@ -6,11 +6,12 @@ public class PlayerAnimation : MonoBehaviour
     public float CurrentRotationY { get; private set; } = 0f;
     public Vector3 Direction => LookDir > 0 ? Vector3.right : Vector3.left;
 
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        if (animator != null)
+            animator.applyRootMotion = false;
     }
 
     public void SetLookDir(int dir)
@@ -25,4 +26,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         animator.Play(motion.ToString());
     }
+
+    public void JumpEnd() { }
 }

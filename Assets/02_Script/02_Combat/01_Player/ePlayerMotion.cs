@@ -15,7 +15,7 @@ public enum ePlayerMotion
     Attack3,
 
     // 스킬
-    Skill1,  // Float (공중)
+    Skill1_Float,  // Float (공중)
     Skill2,  // Slow (슬로우)
     Skill3,  // Stun (스턴)
     Skill4,  // Push (밀치기)
