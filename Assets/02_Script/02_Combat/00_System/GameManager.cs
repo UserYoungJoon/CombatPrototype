@@ -9,10 +9,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputManager inputManager;
     [SerializeField] private EffectManager effectManager;
     [SerializeField] private ParticleManager particleManager;
+    [SerializeField] private CinematicManager cinematicManager;
     [SerializeField] private EventBus eventBus;
     public InputManager InputManager => inputManager;
     public EffectManager EffectManager => effectManager;
     public ParticleManager ParticleManager => particleManager;
+    public CinematicManager CinematicManager => cinematicManager;
     public EventBus EventBus => eventBus;
 
     public MonsterUnit monster;
@@ -23,5 +25,6 @@ public class GameManager : MonoBehaviour
         inputManager.Init();
         effectManager.Init();
         particleManager.Init();
+        cinematicManager.Init();
     }
 }

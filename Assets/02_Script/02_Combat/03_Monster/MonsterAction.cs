@@ -23,6 +23,7 @@ public class MonsterAction : MonoBehaviour
     private void Update()
     {
         if (!isPlaying) return;
+        if (GameManager.Instance.CinematicManager.IsStopMotion) return;
 
         float clipLength = GetClipLength(currentMotion);
         float delta = Time.deltaTime * playbackSpeed;
@@ -42,8 +43,6 @@ public class MonsterAction : MonoBehaviour
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (stateInfo.IsName(currentMotion.ToString()) && stateInfo.normalizedTime >= 1f)
         {
-            // 마지막 프레임에 고정 (1.0은 첫 프레임으로 wrap될 수 있어서 0.99 사용)
-            Debug.Log($"Animation End: {currentMotion}, setting to 0.99f");
             animator.speed = 1f;
             animator.Play(currentMotion.ToString(), 0, 0.99f);
             animator.Update(0f);

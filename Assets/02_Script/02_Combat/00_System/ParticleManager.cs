@@ -90,8 +90,23 @@ public class ParticleManager : ManagerBase
         };
     }
 
+    private bool wasPaused = false;
+
     private void Update()
     {
+        // Stop Motion 중이면 파티클 일시정지
+        bool isStopMotion = GameManager.Instance.CinematicManager.IsStopMotion;
+        if (isStopMotion && !wasPaused)
+        {
+            PauseAll();
+            wasPaused = true;
+        }
+        else if (!isStopMotion && wasPaused)
+        {
+            ResumeAll();
+            wasPaused = false;
+        }
+
         // Clean up dead particles
         for (int i = activeParticles.Count - 1; i >= 0; i--)
         {

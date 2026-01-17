@@ -21,6 +21,9 @@ public class Unit : MonoBehaviour
         currentHP -= damage;
         OnAttacked(attacker, damage);
 
+        // 히트 이펙트 (스톱모션 + 카메라 쉐이크)
+        GameManager.Instance.CinematicManager.PlayHitEffect();
+
         if (currentHP <= 0)
         {
             Die();

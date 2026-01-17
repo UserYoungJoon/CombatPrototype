@@ -119,6 +119,67 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &11362149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11362150}
+  - component: {fileID: 11362152}
+  - component: {fileID: 11362151}
+  m_Layer: 0
+  m_Name: CinematicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &11362150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11362149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 696150942}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11362151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11362149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e540c1faae524f419f0dfff48b898ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CinematicManager
+  stopMotionDuration: 0.2
+  shakeDuration: 0.15
+  shakeMagnitude: 0.1
+  mainCamera: {fileID: 0}
+--- !u!114 &11362152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11362149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e40b6d91f9c70e4cb481cca76954428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventBus
 --- !u!1 &186206077
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +403,7 @@ MonoBehaviour:
   inputManager: {fileID: 1230739126}
   effectManager: {fileID: 1950228104}
   particleManager: {fileID: 1525795972}
+  cinematicManager: {fileID: 11362151}
   eventBus: {fileID: 566245580}
   monster: {fileID: 5467629474456040617}
 --- !u!114 &566245580
@@ -551,6 +613,7 @@ Transform:
   - {fileID: 1230739125}
   - {fileID: 1950228103}
   - {fileID: 1525795971}
+  - {fileID: 11362150}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1205478756
@@ -2082,7 +2145,7 @@ Transform:
   m_GameObject: {fileID: 2134367283}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.69, y: 0.025109768, z: -22.34934}
+  m_LocalPosition: {x: 15.5, y: 0, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2392,7 +2455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7acd99f6452b374794517a21cdde972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyUnit
-  currentHP: 10
+  currentHP: 100
   attackPower: 0
   moveSpeed: 0
   attackSpeed: 0

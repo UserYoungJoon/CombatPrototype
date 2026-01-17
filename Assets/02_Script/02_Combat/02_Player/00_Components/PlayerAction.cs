@@ -37,6 +37,7 @@ public class PlayerAction : MonoBehaviour
     private void Update()
     {
         if (!isPlaying) return;
+        if (GameManager.Instance.CinematicManager.IsStopMotion) return;
 
         // 수동 업데이트
         float clipLength = GetClipLength(currentMotion);
