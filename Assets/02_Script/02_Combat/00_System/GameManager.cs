@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public InputManager InputManager => inputManager;
     public EffectManager EffectManager => effectManager;
 
+    public Unit enemy;
+
     private void Awake()
     {
         Instance = this;

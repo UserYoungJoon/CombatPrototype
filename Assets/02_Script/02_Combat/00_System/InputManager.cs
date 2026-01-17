@@ -1,7 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 public class InputManager : ManagerBase
 {
+    private List<Key> pressedKeys = new();
+
+    public Key GetLatestHeldKey()
+    {
+        return pressedKeys.Count > 0 ? pressedKeys[^1] : Key.None;
+    }
+
     private static readonly Key[] TrackedKeys = new Key[]
     {
         Key.A, Key.B, Key.C, Key.D, Key.E, Key.F, Key.G, Key.H, Key.I, Key.J, Key.K, Key.L, Key.M,
@@ -33,10 +41,16 @@ public class InputManager : ManagerBase
             var keyControl = keyboard[key];
 
             if (keyControl.wasPressedThisFrame)
+            {
+                pressedKeys.Add(key);
                 EventBus.SendEvent(new OnKeyDown(key));
+            }
 
             if (keyControl.wasReleasedThisFrame)
+            {
+                pressedKeys.Remove(key);
                 EventBus.SendEvent(new OnKeyUp(key));
+            }
 
             if (keyControl.isPressed)
                 EventBus.SendEvent(new OnKeyHolding(key));

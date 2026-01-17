@@ -19,9 +19,14 @@ public abstract class ActionBase
         OnStart();
     }
 
-    public void Update()
+    public void KeyHolding()
     {
-        OnUpdate();
+        OnKeyHolding();
+    }
+
+    public void KeyUp()
+    {
+        OnKeyUp();
     }
 
     public void End()
@@ -38,7 +43,8 @@ public abstract class ActionBase
 
     protected virtual void OnInit() {}
     protected virtual void OnStart() {}
-    protected virtual void OnUpdate() {}
+    protected virtual void OnKeyHolding() {}
+    protected virtual void OnKeyUp() {}
     protected virtual void OnEnd() {}
     protected virtual void OnAborted() {}
     

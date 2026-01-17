@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerState : MonoBehaviour
 {
     [SerializeField] private PlayerAction playerAction;
-    private ePlayerState state = ePlayerState.Idle;
+    [SerializeField] private ePlayerState state = ePlayerState.Idle;
     public ePlayerState State => state;
 
     public void Init()
@@ -28,7 +28,6 @@ public class PlayerState : MonoBehaviour
         switch (newState)
         {
             case ePlayerState.Idle:
-                playerAction.Play(ePlayerMotionType.Idle, true);
                 break;
             case ePlayerState.Move:
                 break;

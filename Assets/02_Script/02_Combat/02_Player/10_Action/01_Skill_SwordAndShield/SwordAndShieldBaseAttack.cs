@@ -32,10 +32,21 @@ namespace Skill.SwordAndShield
                 attackIndex = 0;
             }
 
-            base.player.ActionComponent.Play(MOTIONS[attackIndex], false, player.AttackSpeed);
-            cooldownTime = 1f / player.AttackSpeed;
+            var motion = MOTIONS[attackIndex];
+            player.ActionComponent.Play(motion, false, player.AttackSpeed);
+            cooldownTime = player.ActionComponent.GetAnimationDuration(motion, player.AttackSpeed);
 
             attackIndex = (attackIndex + 1) % MOTIONS.Length;
+        }
+
+        protected override void OnAnimatorEvent(OnAnimatorEvent evt)
+        {
+            Debug.Log($"{GameManager.Instance.enemy.gameObject.name} Hit by {player.gameObject.name}");
+        }
+
+        protected override void OnEndSkill()
+        {
+            cooldownTime = 0f;
         }
     }
 }
