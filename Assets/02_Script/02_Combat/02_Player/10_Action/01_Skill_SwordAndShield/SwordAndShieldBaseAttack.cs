@@ -44,6 +44,7 @@ namespace Skill.SwordAndShield
             var hitPos = player.AttackPoint.position;
             var dir = player.ActionComponent.Direction;
             GameManager.Instance.ParticleManager.PlayBasicEffect(hitPos, dir);
+            GameManager.Instance.monster.AttackedBy(player, 10);
         }
 
         protected override void OnEndSkill()

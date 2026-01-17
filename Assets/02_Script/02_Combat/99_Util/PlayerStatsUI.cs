@@ -9,6 +9,8 @@ public class PlayerStatsUI : MonoBehaviour
     public TextMeshProUGUI actualAnimText;
     public TextMeshProUGUI currentMotionText;
 
+    public TextMeshProUGUI enemyAnimText;
+
     void Update()
     {
         if (player is null) return;
@@ -20,6 +22,17 @@ public class PlayerStatsUI : MonoBehaviour
         string actualAnim = GetActualAnimName(stateInfo);
         actualAnimText.text = $"Actual Anim : {actualAnim} ({stateInfo.normalizedTime:F2})";
         currentMotionText.text = $"CurrentMotion : {player.ActionComponent.CurrentMotion}";
+
+        var enemy = GameManager.Instance.monster;
+        if (enemy != null)
+        {
+            var enemyStateInfo = enemy.ActionComponent.CurrentStateInfo;
+            enemyAnimText.text = $"Enemy: {enemy.ActionComponent.CurrentMotion} ({enemyStateInfo.normalizedTime:F2})";
+        }
+        else
+        {
+            enemyAnimText.text = "Enemy: null";
+        }
     }
 
     private string GetActualAnimName(AnimatorStateInfo stateInfo)

@@ -4,13 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerAction))]
 public class PlayerState : MonoBehaviour
 {
-    [SerializeField] private PlayerAction playerAction;
     [SerializeField] private ePlayerState state = ePlayerState.Idle;
     public ePlayerState State => state;
 
     public void Init()
     {
-        playerAction = GetComponent<PlayerAction>();
     }
 
     public void ChangeState(ePlayerState newState)

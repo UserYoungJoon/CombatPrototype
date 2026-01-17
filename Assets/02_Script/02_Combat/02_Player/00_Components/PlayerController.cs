@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerUnit player;
     [SerializeField] private PlayerAction playerAction;
-    [SerializeField] private float moveSpeed = 15f;
 
     private Dictionary<Key, PlayerCommand> commandDict = new();
     private Dictionary<eActionCode, ActionBase> actionDict = new();

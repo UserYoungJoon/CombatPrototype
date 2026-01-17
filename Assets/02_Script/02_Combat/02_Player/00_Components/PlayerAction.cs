@@ -111,7 +111,6 @@ public class PlayerAction : MonoBehaviour
         animator.speed = 0f;
         animator.Play(motion.ToString());
         animator.Update(0f);
-        Debug.Log($"Play {motion}");
 
         player.EventBus.SendEvent(new OnPlayerActionChanged(player, motion));
     }

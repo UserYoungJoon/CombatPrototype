@@ -6,8 +6,6 @@ public class TargetCamera_Platform : MonoBehaviour
 {
     [SerializeField] [Tooltip("target")]
     Transform target = null;
-    [SerializeField] [Tooltip("lerpTime")]
-    float lerpTime = 1;
 
     Vector3 initialPosition;
 
