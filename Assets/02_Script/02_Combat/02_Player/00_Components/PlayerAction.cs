@@ -10,20 +10,14 @@ public class PlayerAction : MonoBehaviour
     [SerializeField] private Animator animator;
 
     private Dictionary<ePlayerMotion, AnimationEventData> eventDataDict = new();
+    private HashSet<int> firedEventIndices = new();
     private ePlayerMotion currentMotion;
     private float prevNormalizedTime;
-    private HashSet<int> firedEventIndices = new();
 
-    private void Awake()
+    public void Init()
     {
-        if (animator != null)
-            animator.applyRootMotion = false;
+        animator.applyRootMotion = false;
 
-        LoadAllEventData();
-    }
-
-    private void LoadAllEventData()
-    {
         foreach (ePlayerMotion motion in System.Enum.GetValues(typeof(ePlayerMotion)))
         {
             var data = Resources.Load<AnimationEventData>($"AnimationEvents/{motion}");
@@ -34,8 +28,6 @@ public class PlayerAction : MonoBehaviour
 
     private void Update()
     {
-        if (animator == null) return;
-
         var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         float normalizedTime = stateInfo.normalizedTime % 1f;
 
@@ -68,12 +60,13 @@ public class PlayerAction : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, CurrentRotationY, 0f);
     }
 
-    public void Play(ePlayerMotion motion, float blendTime = 0.2f)
+    public void Play(ePlayerMotion motion, float timeScale = 1f, float blendTime = 0.2f)
     {
         currentMotion = motion;
         prevNormalizedTime = 0f;
         firedEventIndices.Clear();
         animator.CrossFade(motion.ToString(), blendTime);
+        animator.speed = timeScale;
     }
 
     private void FireEvent(string eventName)

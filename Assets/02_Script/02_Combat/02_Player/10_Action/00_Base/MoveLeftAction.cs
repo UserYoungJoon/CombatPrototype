@@ -1,0 +1,22 @@
+using UnityEngine;
+
+public class MoveLeftAction : ActionBase
+{
+    private float moveSpeed = 15f;
+
+    protected override void OnStart()
+    {
+        player.ActionComponent.SetLookDir(-1);
+        player.ActionComponent.Play(ePlayerMotion.Run);
+    }
+
+    protected override void OnUpdate()
+    {
+        player.ControllerComponent.transform.position += new Vector3(-moveSpeed * Time.deltaTime, 0, 0);
+    }
+
+    protected override void OnEnd()
+    {
+        player.ActionComponent.Play(ePlayerMotion.Idle);
+    }
+}

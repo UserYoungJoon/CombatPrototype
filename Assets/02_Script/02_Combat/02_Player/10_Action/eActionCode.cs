@@ -3,12 +3,13 @@ public enum eActionCode
 {
     // Base Actions
     Idle,
-    Move,
+    MoveLeft,
+    MoveRight,
     Jump,
     Attack,
     Hit,
 
     // SwordAndShield Actions
-    SwordAndShield_Attack1,
+    SwordAndShield_BaseAttack,
     SwordAndShield_Skill7,
 }

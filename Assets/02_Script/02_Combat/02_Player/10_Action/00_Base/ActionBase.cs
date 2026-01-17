@@ -2,15 +2,11 @@ using UnityEngine;
 
 public abstract class ActionBase
 {
-    protected PlayerController playerController;
-    protected PlayerAction playerAnimation;
-    protected EventBus eventBus;
+    protected PlayerUnit player;
 
-    public void Init(PlayerController _playerController, PlayerAction _playerAnimation, EventBus _eventBus)
+    public void Init(PlayerUnit player)
     {
-        this.playerController = _playerController;
-        this.playerAnimation = _playerAnimation;
-        this.eventBus = _eventBus;
+        this.player = player;
         OnInit();
     }
 

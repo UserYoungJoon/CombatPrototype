@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] InputManager inputManager;
     [SerializeField] EffectManager effectManager;
+    public InputManager InputManager => inputManager;
+    public EffectManager EffectManager => effectManager;
 
     private void Awake()
     {
