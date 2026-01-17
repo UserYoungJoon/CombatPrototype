@@ -9,6 +9,8 @@ public readonly struct PlayerCommand
         Type = type;
         Code = code;
     }
+
+    public static readonly PlayerCommand None = new PlayerCommand(ePlayerCommand.None);
 }
 
 public enum ePlayerCommand

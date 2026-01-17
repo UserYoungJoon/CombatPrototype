@@ -14,7 +14,6 @@ public class AnimationEditManager : MonoBehaviour
     public Canvas canvas;
 
     private TMP_Dropdown motionDropdown;
-    private TMP_Dropdown clipDropdown;
     private Slider timelineSlider;
     private TMP_Text timeText;
     private Button playButton;
@@ -40,64 +39,73 @@ public class AnimationEditManager : MonoBehaviour
         SetupMotionDropdown();
         SetupButtons();
 
-        if (animator != null && animator.runtimeAnimatorController != null)
-            LoadClips();
+        if (animator != null)
+        {
+            animator.speed = 0;
+            if (animator.runtimeAnimatorController != null)
+                LoadClips();
+        }
 
         timelineSlider.onValueChanged.AddListener(OnTimelineChanged);
     }
 
     private void Update()
     {
-        if (isPlaying && selectedClip != null)
-        {
-            normalizedTime += Time.deltaTime / selectedClip.length;
-            if (normalizedTime >= 1f)
-                normalizedTime = 0f;
+        if (!isPlaying) return;
 
-            timelineSlider.SetValueWithoutNotify(normalizedTime);
-            UpdateTimeText();
-        }
+        normalizedTime += Time.deltaTime / GetClipLength();
+        if (normalizedTime >= 1f)
+            normalizedTime = 0f;
 
+        timelineSlider.SetValueWithoutNotify(normalizedTime);
+        UpdateTimeText();
         UpdateAnimation();
+    }
+
+    private float GetClipLength()
+    {
+        if (selectedClip != null) return selectedClip.length;
+        return 1f;
     }
 
     private void CreateUI()
     {
-        var panel = CreatePanel("MainPanel", canvas.transform, new Vector2(400, 600), new Vector2(220, 0));
+        var panel = CreatePanel("MainPanel", canvas.transform, new Vector2(800, 1000), new Vector2(-40, 0));
 
         float y = -20;
 
-        CreateLabel("Motion", panel.transform, new Vector2(180, 30), new Vector2(0, y));
-        motionDropdown = CreateDropdown("MotionDropdown", panel.transform, new Vector2(180, 30), new Vector2(0, y - 30));
-        y -= 70;
+        CreateLabel("Motion", panel.transform, new Vector2(360, 40), new Vector2(0, y));
+        motionDropdown = CreateDropdown("MotionDropdown", panel.transform, new Vector2(360, 50), new Vector2(0, y - 40));
+        y -= 100;
 
-        CreateLabel("Animation Clip", panel.transform, new Vector2(180, 30), new Vector2(0, y));
-        clipDropdown = CreateDropdown("ClipDropdown", panel.transform, new Vector2(180, 30), new Vector2(0, y - 30));
-        y -= 70;
+        CreateLabel("Timeline", panel.transform, new Vector2(360, 40), new Vector2(0, y));
+        timelineSlider = CreateSlider("TimelineSlider", panel.transform, new Vector2(360, 30), new Vector2(0, y - 45));
+        timeText = CreateLabel("0.000 (0.000s)", panel.transform, new Vector2(360, 30), new Vector2(0, y - 80));
+        y -= 120;
 
-        CreateLabel("Timeline", panel.transform, new Vector2(180, 30), new Vector2(0, y));
-        timelineSlider = CreateSlider("TimelineSlider", panel.transform, new Vector2(180, 20), new Vector2(0, y - 30));
-        timeText = CreateLabel("0.000 (0.000s)", panel.transform, new Vector2(180, 20), new Vector2(0, y - 55));
-        y -= 85;
+        var buttonPanel = new GameObject("ButtonPanel", typeof(RectTransform));
+        buttonPanel.transform.SetParent(panel.transform, false);
+        var buttonPanelRt = buttonPanel.GetComponent<RectTransform>();
+        buttonPanelRt.sizeDelta = new Vector2(320, 60);
+        buttonPanelRt.anchorMin = new Vector2(0.5f, 1);
+        buttonPanelRt.anchorMax = new Vector2(0.5f, 1);
+        buttonPanelRt.pivot = new Vector2(0.5f, 1);
+        buttonPanelRt.anchoredPosition = new Vector2(0, y);
 
-        var buttonPanel = CreatePanel("ButtonPanel", panel.transform, new Vector2(180, 40), new Vector2(0, y));
-        buttonPanel.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-
-        playButton = CreateButton("▶", buttonPanel.transform, new Vector2(40, 35), new Vector2(-70, 0));
+        playButton = CreateButton("Play", buttonPanel.transform, new Vector2(80, 50), new Vector2(-120, 0));
         playButtonText = playButton.GetComponentInChildren<TMP_Text>();
-        stopButton = CreateButton("■", buttonPanel.transform, new Vector2(40, 35), new Vector2(-25, 0));
-        prevFrameButton = CreateButton("<", buttonPanel.transform, new Vector2(40, 35), new Vector2(20, 0));
-        nextFrameButton = CreateButton(">", buttonPanel.transform, new Vector2(40, 35), new Vector2(65, 0));
-        y -= 50;
+        stopButton = CreateButton("Stop", buttonPanel.transform, new Vector2(80, 50), new Vector2(-35, 0));
+        prevFrameButton = CreateButton("<", buttonPanel.transform, new Vector2(50, 50), new Vector2(35, 0));
+        nextFrameButton = CreateButton(">", buttonPanel.transform, new Vector2(50, 50), new Vector2(95, 0));
+        y -= 80;
 
-        CreateLabel("Event Name", panel.transform, new Vector2(180, 30), new Vector2(0, y));
-        eventNameInput = CreateInputField("EventNameInput", panel.transform, new Vector2(130, 30), new Vector2(-25, y - 30));
-        addEventButton = CreateButton("+", panel.transform, new Vector2(40, 30), new Vector2(70, y - 30));
-        y -= 70;
+        CreateLabel("Event Name", panel.transform, new Vector2(360, 40), new Vector2(0, y));
+        eventNameInput = CreateInputField("EventNameInput", panel.transform, new Vector2(260, 50), new Vector2(-50, y - 45));
+        addEventButton = CreateButton("+", panel.transform, new Vector2(70, 50), new Vector2(145, y - 45));
+        y -= 110;
 
-        CreateLabel("Events", panel.transform, new Vector2(180, 30), new Vector2(0, y));
-        var scrollView = CreateScrollView("EventList", panel.transform, new Vector2(180, 200), new Vector2(0, y - 120));
-        eventListContent = scrollView.transform.Find("Viewport/Content");
+        CreateLabel("Events", panel.transform, new Vector2(360, 40), new Vector2(0, y));
+        eventListContent = CreateScrollView("EventList", panel.transform, new Vector2(360, 350), new Vector2(0, y - 50));
     }
 
     private GameObject CreatePanel(string name, Transform parent, Vector2 size, Vector2 pos)
@@ -126,7 +134,7 @@ public class AnimationEditManager : MonoBehaviour
         rt.anchoredPosition = pos;
         var tmp = go.GetComponent<TextMeshProUGUI>();
         tmp.text = text;
-        tmp.fontSize = 14;
+        tmp.fontSize = 28;
         tmp.alignment = TextAlignmentOptions.Center;
         return tmp;
     }
@@ -148,30 +156,32 @@ public class AnimationEditManager : MonoBehaviour
         var labelRt = label.GetComponent<RectTransform>();
         labelRt.anchorMin = Vector2.zero;
         labelRt.anchorMax = Vector2.one;
-        labelRt.offsetMin = new Vector2(10, 0);
-        labelRt.offsetMax = new Vector2(-25, 0);
+        labelRt.offsetMin = new Vector2(5, 0);
+        labelRt.offsetMax = new Vector2(-35, 0);
         var labelTmp = label.GetComponent<TextMeshProUGUI>();
-        labelTmp.fontSize = 12;
-        labelTmp.alignment = TextAlignmentOptions.Left;
+        labelTmp.fontSize = 20;
+        labelTmp.alignment = TextAlignmentOptions.Center;
 
         var arrow = new GameObject("Arrow", typeof(RectTransform), typeof(Image));
         arrow.transform.SetParent(go.transform, false);
         var arrowRt = arrow.GetComponent<RectTransform>();
-        arrowRt.sizeDelta = new Vector2(20, 20);
+        arrowRt.sizeDelta = new Vector2(25, 25);
         arrowRt.anchorMin = new Vector2(1, 0.5f);
         arrowRt.anchorMax = new Vector2(1, 0.5f);
         arrowRt.pivot = new Vector2(1, 0.5f);
-        arrowRt.anchoredPosition = new Vector2(-5, 0);
+        arrowRt.anchoredPosition = new Vector2(-10, 0);
 
-        var template = new GameObject("Template", typeof(RectTransform), typeof(Image), typeof(ScrollRect));
+        var template = new GameObject("Template", typeof(RectTransform), typeof(Image), typeof(ScrollRect), typeof(Canvas), typeof(UnityEngine.UI.GraphicRaycaster));
         template.transform.SetParent(go.transform, false);
         var templateRt = template.GetComponent<RectTransform>();
-        templateRt.sizeDelta = new Vector2(size.x, 150);
+        templateRt.sizeDelta = new Vector2(size.x, 300);
         templateRt.anchorMin = new Vector2(0, 0);
         templateRt.anchorMax = new Vector2(1, 0);
         templateRt.pivot = new Vector2(0.5f, 1);
         templateRt.anchoredPosition = new Vector2(0, 0);
         template.GetComponent<Image>().color = new Color(0.15f, 0.15f, 0.15f);
+        template.GetComponent<Canvas>().overrideSorting = true;
+        template.GetComponent<Canvas>().sortingOrder = 100;
         template.SetActive(false);
 
         var viewport = new GameObject("Viewport", typeof(RectTransform), typeof(Mask), typeof(Image));
@@ -181,12 +191,12 @@ public class AnimationEditManager : MonoBehaviour
         viewportRt.anchorMax = Vector2.one;
         viewportRt.offsetMin = Vector2.zero;
         viewportRt.offsetMax = Vector2.zero;
-        viewport.GetComponent<Image>().color = Color.white;
+        viewport.GetComponent<Mask>().showMaskGraphic = false;
 
         var content = new GameObject("Content", typeof(RectTransform));
         content.transform.SetParent(viewport.transform, false);
         var contentRt = content.GetComponent<RectTransform>();
-        contentRt.sizeDelta = new Vector2(size.x, 28);
+        contentRt.sizeDelta = new Vector2(size.x, 56);
         contentRt.anchorMin = new Vector2(0, 1);
         contentRt.anchorMax = new Vector2(1, 1);
         contentRt.pivot = new Vector2(0.5f, 1);
@@ -194,7 +204,7 @@ public class AnimationEditManager : MonoBehaviour
         var item = new GameObject("Item", typeof(RectTransform), typeof(Toggle));
         item.transform.SetParent(content.transform, false);
         var itemRt = item.GetComponent<RectTransform>();
-        itemRt.sizeDelta = new Vector2(size.x, 28);
+        itemRt.sizeDelta = new Vector2(size.x, 56);
         itemRt.anchorMin = new Vector2(0, 0.5f);
         itemRt.anchorMax = new Vector2(1, 0.5f);
         itemRt.pivot = new Vector2(0.5f, 0.5f);
@@ -213,11 +223,11 @@ public class AnimationEditManager : MonoBehaviour
         var itemLabelRt = itemLabel.GetComponent<RectTransform>();
         itemLabelRt.anchorMin = Vector2.zero;
         itemLabelRt.anchorMax = Vector2.one;
-        itemLabelRt.offsetMin = new Vector2(10, 0);
-        itemLabelRt.offsetMax = new Vector2(-10, 0);
+        itemLabelRt.offsetMin = new Vector2(5, 0);
+        itemLabelRt.offsetMax = new Vector2(-5, 0);
         var itemLabelTmp = itemLabel.GetComponent<TextMeshProUGUI>();
-        itemLabelTmp.fontSize = 12;
-        itemLabelTmp.alignment = TextAlignmentOptions.Left;
+        itemLabelTmp.fontSize = 20;
+        itemLabelTmp.alignment = TextAlignmentOptions.Center;
 
         var toggle = item.GetComponent<Toggle>();
         toggle.targetGraphic = itemBg.GetComponent<Image>();
@@ -260,8 +270,8 @@ public class AnimationEditManager : MonoBehaviour
         var fillAreaRt = fillArea.GetComponent<RectTransform>();
         fillAreaRt.anchorMin = Vector2.zero;
         fillAreaRt.anchorMax = Vector2.one;
-        fillAreaRt.offsetMin = new Vector2(5, 0);
-        fillAreaRt.offsetMax = new Vector2(-5, 0);
+        fillAreaRt.offsetMin = new Vector2(10, 0);
+        fillAreaRt.offsetMax = new Vector2(-10, 0);
 
         var fill = new GameObject("Fill", typeof(RectTransform), typeof(Image));
         fill.transform.SetParent(fillArea.transform, false);
@@ -277,13 +287,13 @@ public class AnimationEditManager : MonoBehaviour
         var handleAreaRt = handleArea.GetComponent<RectTransform>();
         handleAreaRt.anchorMin = Vector2.zero;
         handleAreaRt.anchorMax = Vector2.one;
-        handleAreaRt.offsetMin = new Vector2(10, 0);
-        handleAreaRt.offsetMax = new Vector2(-10, 0);
+        handleAreaRt.offsetMin = new Vector2(20, 0);
+        handleAreaRt.offsetMax = new Vector2(-20, 0);
 
         var handle = new GameObject("Handle", typeof(RectTransform), typeof(Image));
         handle.transform.SetParent(handleArea.transform, false);
         var handleRt = handle.GetComponent<RectTransform>();
-        handleRt.sizeDelta = new Vector2(10, 0);
+        handleRt.sizeDelta = new Vector2(20, 0);
         handle.GetComponent<Image>().color = Color.white;
 
         var slider = go.GetComponent<Slider>();
@@ -316,7 +326,7 @@ public class AnimationEditManager : MonoBehaviour
         labelRt.offsetMax = Vector2.zero;
         var tmp = label.GetComponent<TextMeshProUGUI>();
         tmp.text = text;
-        tmp.fontSize = 16;
+        tmp.fontSize = 32;
         tmp.alignment = TextAlignmentOptions.Center;
 
         var btn = go.GetComponent<Button>();
@@ -335,15 +345,29 @@ public class AnimationEditManager : MonoBehaviour
         rt.anchorMax = new Vector2(0.5f, 1);
         rt.pivot = new Vector2(0.5f, 1);
         rt.anchoredPosition = pos;
-        go.GetComponent<Image>().color = new Color(0.15f, 0.15f, 0.15f);
+        go.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f);
 
         var textArea = new GameObject("Text Area", typeof(RectTransform), typeof(RectMask2D));
         textArea.transform.SetParent(go.transform, false);
         var textAreaRt = textArea.GetComponent<RectTransform>();
         textAreaRt.anchorMin = Vector2.zero;
         textAreaRt.anchorMax = Vector2.one;
-        textAreaRt.offsetMin = new Vector2(5, 0);
-        textAreaRt.offsetMax = new Vector2(-5, 0);
+        textAreaRt.offsetMin = new Vector2(10, 0);
+        textAreaRt.offsetMax = new Vector2(-10, 0);
+
+        var placeholder = new GameObject("Placeholder", typeof(RectTransform), typeof(TextMeshProUGUI));
+        placeholder.transform.SetParent(textArea.transform, false);
+        var placeholderRt = placeholder.GetComponent<RectTransform>();
+        placeholderRt.anchorMin = Vector2.zero;
+        placeholderRt.anchorMax = Vector2.one;
+        placeholderRt.offsetMin = Vector2.zero;
+        placeholderRt.offsetMax = Vector2.zero;
+        var placeholderTmp = placeholder.GetComponent<TextMeshProUGUI>();
+        placeholderTmp.text = "Enter event name...";
+        placeholderTmp.fontSize = 20;
+        placeholderTmp.fontStyle = FontStyles.Italic;
+        placeholderTmp.color = new Color(0.7f, 0.7f, 0.7f);
+        placeholderTmp.alignment = TextAlignmentOptions.Left;
 
         var textComponent = new GameObject("Text", typeof(RectTransform), typeof(TextMeshProUGUI));
         textComponent.transform.SetParent(textArea.transform, false);
@@ -353,17 +377,19 @@ public class AnimationEditManager : MonoBehaviour
         textRt.offsetMin = Vector2.zero;
         textRt.offsetMax = Vector2.zero;
         var tmp = textComponent.GetComponent<TextMeshProUGUI>();
-        tmp.fontSize = 14;
+        tmp.fontSize = 20;
+        tmp.color = Color.white;
         tmp.alignment = TextAlignmentOptions.Left;
 
         var inputField = go.GetComponent<TMP_InputField>();
         inputField.textViewport = textAreaRt;
         inputField.textComponent = tmp;
+        inputField.placeholder = placeholderTmp;
 
         return inputField;
     }
 
-    private GameObject CreateScrollView(string name, Transform parent, Vector2 size, Vector2 pos)
+    private Transform CreateScrollView(string name, Transform parent, Vector2 size, Vector2 pos)
     {
         var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(ScrollRect));
         go.transform.SetParent(parent, false);
@@ -382,7 +408,7 @@ public class AnimationEditManager : MonoBehaviour
         viewportRt.anchorMax = Vector2.one;
         viewportRt.offsetMin = Vector2.zero;
         viewportRt.offsetMax = Vector2.zero;
-        viewport.GetComponent<Image>().color = Color.white;
+        viewport.GetComponent<Mask>().showMaskGraphic = false;
 
         var content = new GameObject("Content", typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(ContentSizeFitter));
         content.transform.SetParent(viewport.transform, false);
@@ -393,12 +419,12 @@ public class AnimationEditManager : MonoBehaviour
         contentRt.sizeDelta = new Vector2(0, 0);
 
         var vlg = content.GetComponent<VerticalLayoutGroup>();
-        vlg.spacing = 2;
+        vlg.spacing = 4;
         vlg.childControlWidth = true;
         vlg.childControlHeight = false;
         vlg.childForceExpandWidth = true;
         vlg.childForceExpandHeight = false;
-        vlg.padding = new RectOffset(5, 5, 5, 5);
+        vlg.padding = new RectOffset(10, 10, 10, 10);
 
         var csf = content.GetComponent<ContentSizeFitter>();
         csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
@@ -409,28 +435,28 @@ public class AnimationEditManager : MonoBehaviour
         scrollRect.horizontal = false;
         scrollRect.vertical = true;
 
-        return go;
+        return content.transform;
     }
 
     private GameObject CreateEventItem(AnimEventInfo evt, int index)
     {
         var go = new GameObject("EventItem", typeof(RectTransform), typeof(Image), typeof(LayoutElement));
         go.GetComponent<Image>().color = new Color(0.2f, 0.2f, 0.2f);
-        go.GetComponent<LayoutElement>().preferredHeight = 30;
+        go.GetComponent<LayoutElement>().preferredHeight = 60;
 
         var text = new GameObject("Text", typeof(RectTransform), typeof(TextMeshProUGUI));
         text.transform.SetParent(go.transform, false);
         var textRt = text.GetComponent<RectTransform>();
         textRt.anchorMin = Vector2.zero;
         textRt.anchorMax = Vector2.one;
-        textRt.offsetMin = new Vector2(5, 0);
-        textRt.offsetMax = new Vector2(-60, 0);
+        textRt.offsetMin = new Vector2(10, 0);
+        textRt.offsetMax = new Vector2(-120, 0);
         var tmp = text.GetComponent<TextMeshProUGUI>();
         tmp.text = $"{evt.eventName} @ {evt.normalizedTime:F3}";
-        tmp.fontSize = 12;
+        tmp.fontSize = 24;
         tmp.alignment = TextAlignmentOptions.Left;
 
-        var selectBtn = CreateButton("→", go.transform, new Vector2(25, 25), new Vector2(-35, 0));
+        var selectBtn = CreateButton(">", go.transform, new Vector2(50, 50), new Vector2(-70, 0));
         selectBtn.name = "SelectButton";
         selectBtn.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0.5f);
         selectBtn.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0.5f);
@@ -442,7 +468,7 @@ public class AnimationEditManager : MonoBehaviour
             UpdateTimeText();
         });
 
-        var deleteBtn = CreateButton("X", go.transform, new Vector2(25, 25), new Vector2(-7, 0));
+        var deleteBtn = CreateButton("X", go.transform, new Vector2(50, 50), new Vector2(-14, 0));
         deleteBtn.name = "DeleteButton";
         deleteBtn.GetComponent<RectTransform>().anchorMin = new Vector2(1, 0.5f);
         deleteBtn.GetComponent<RectTransform>().anchorMax = new Vector2(1, 0.5f);
@@ -467,12 +493,13 @@ public class AnimationEditManager : MonoBehaviour
     private void LoadClips()
     {
         clips = animator.runtimeAnimatorController.animationClips;
-        clipDropdown.ClearOptions();
-        clipDropdown.AddOptions(clips.Select(c => c.name).ToList());
-        clipDropdown.onValueChanged.AddListener(OnClipChanged);
+        UpdateSelectedClip();
+    }
 
-        if (clips.Length > 0)
-            selectedClip = clips[0];
+    private void UpdateSelectedClip()
+    {
+        string motionName = selectedMotion.ToString();
+        selectedClip = clips?.FirstOrDefault(c => c.name.Contains(motionName));
     }
 
     private void SetupButtons()
@@ -489,18 +516,10 @@ public class AnimationEditManager : MonoBehaviour
         selectedMotion = (ePlayerMotion)index;
         normalizedTime = 0f;
         timelineSlider.SetValueWithoutNotify(0f);
+        UpdateSelectedClip();
         LoadEventData();
         RefreshEventList();
-    }
-
-    private void OnClipChanged(int index)
-    {
-        if (clips != null && index < clips.Length)
-        {
-            selectedClip = clips[index];
-            normalizedTime = 0f;
-            timelineSlider.SetValueWithoutNotify(0f);
-        }
+        UpdateAnimation();
     }
 
     private void OnTimelineChanged(float value)
@@ -509,6 +528,7 @@ public class AnimationEditManager : MonoBehaviour
         isPlaying = false;
         UpdatePlayButtonText();
         UpdateTimeText();
+        UpdateAnimation();
     }
 
     private void OnPlayClicked()
@@ -524,29 +544,30 @@ public class AnimationEditManager : MonoBehaviour
         timelineSlider.SetValueWithoutNotify(0f);
         UpdatePlayButtonText();
         UpdateTimeText();
+        UpdateAnimation();
     }
 
     private void OnPrevFrame()
     {
-        if (selectedClip == null) return;
-        float frameStep = 1f / 60f / selectedClip.length;
+        float frameStep = 1f / 60f / GetClipLength();
         normalizedTime = Mathf.Max(0f, normalizedTime - frameStep);
         timelineSlider.SetValueWithoutNotify(normalizedTime);
         UpdateTimeText();
+        UpdateAnimation();
     }
 
     private void OnNextFrame()
     {
-        if (selectedClip == null) return;
-        float frameStep = 1f / 60f / selectedClip.length;
+        float frameStep = 1f / 60f / GetClipLength();
         normalizedTime = Mathf.Min(1f, normalizedTime + frameStep);
         timelineSlider.SetValueWithoutNotify(normalizedTime);
         UpdateTimeText();
+        UpdateAnimation();
     }
 
     private void UpdatePlayButtonText()
     {
-        playButtonText.text = isPlaying ? "||" : "▶";
+        playButtonText.text = isPlaying ? "||" : "Play";
     }
 
     private void UpdateTimeText()
@@ -557,9 +578,9 @@ public class AnimationEditManager : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        if (animator == null || selectedClip == null) return;
+        if (animator == null) return;
 
-        animator.Play(selectedClip.name, 0, normalizedTime);
+        animator.Play(selectedMotion.ToString(), 0, normalizedTime);
         animator.Update(0f);
     }
 

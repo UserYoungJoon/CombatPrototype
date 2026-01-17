@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public abstract class SkillBase
+public abstract class ActionBase
 {
     protected PlayerController playerController;
-    protected PlayerAnimation playerAnimation;
+    protected PlayerAction playerAnimation;
     protected EventBus eventBus;
 
-    public void Init(PlayerController _playerController, PlayerAnimation _playerAnimation, EventBus _eventBus)
+    public void Init(PlayerController _playerController, PlayerAction _playerAnimation, EventBus _eventBus)
     {
         this.playerController = _playerController;
         this.playerAnimation = _playerAnimation;

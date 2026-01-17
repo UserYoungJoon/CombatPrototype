@@ -1,7 +1,7 @@
 
 namespace Skill.SwordAndShield
 {
-    public class MeeleAttack : SkillBase
+    public class MeeleAttack : ActionBase
     {
         public override void OnStart()
         {

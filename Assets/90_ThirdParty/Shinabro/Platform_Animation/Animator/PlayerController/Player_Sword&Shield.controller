@@ -10,9 +10,7 @@ AnimatorState:
   m_Name: Jump
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 5403758153770053372}
-  - {fileID: 2363366782220587779}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -82,8 +80,7 @@ AnimatorState:
   m_Name: Skill7_Around
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -9196271256352384837}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -153,7 +150,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Skill4_Push
+  m_Name: Skill4_Push
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -229,8 +226,7 @@ AnimatorState:
   m_Name: Skill4_Push
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -7027524854806268640}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -353,9 +349,7 @@ AnimatorState:
   m_Name: Dodge
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 2183494569467490050}
-  - {fileID: 8045780537400128236}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -381,9 +375,7 @@ AnimatorState:
   m_Name: Attack1
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 9087485018839588119}
-  - {fileID: 8333565886237256524}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -453,7 +445,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_JumpAttack2
+  m_Name: JumpAttack2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -585,9 +577,7 @@ AnimatorState:
   m_Name: Run
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -988485944165810437}
-  - {fileID: -8239325276267219411}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -610,7 +600,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Skill6_Move
+  m_Name: Skill6_Move
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -639,8 +629,7 @@ AnimatorState:
   m_Name: Crouch
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -6771888053111349363}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -760,8 +749,7 @@ AnimatorState:
   m_Name: Skill8_Air
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -3172577402804389943}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -831,7 +819,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Skill7_Around
+  m_Name: Skill7_Around
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -979,8 +967,7 @@ AnimatorState:
   m_Name: RunEnd
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 3697080780884147247}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -1003,7 +990,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Skill5_Pull
+  m_Name: Skill5_Pull
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1029,7 +1016,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_JumpAttack3
+  m_Name: JumpAttack3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1201,7 +1188,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Skill8_Air
+  m_Name: Skill8_Air
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1230,8 +1217,7 @@ AnimatorState:
   m_Name: Block
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 1667978030591624122}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -1254,7 +1240,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Weapon_Unsheath
+  m_Name: Weapon_Unsheath
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1283,8 +1269,7 @@ AnimatorState:
   m_Name: Skill1_Float
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 377729217278039517}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -1307,7 +1292,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Skill1_Float
+  m_Name: Skill1_Float
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1430,7 +1415,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Skill3_Stun
+  m_Name: Skill3_Stun
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1531,9 +1516,7 @@ AnimatorState:
   m_Name: Attack2
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -8237840151071214419}
-  - {fileID: -4593045188588754708}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -1606,9 +1589,7 @@ AnimatorState:
   m_Name: Walk
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -6561472059628403710}
-  - {fileID: 6076128272286189710}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -1656,7 +1637,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_JumpAttack1
+  m_Name: JumpAttack1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1685,8 +1666,7 @@ AnimatorState:
   m_Name: Skill6_Move
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -8498421940267033457}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -1712,8 +1692,7 @@ AnimatorState:
   m_Name: Skill3_Stun
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -3028329171164885751}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -1736,7 +1715,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Skill2_Slow
+  m_Name: Skill2_Slow
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1946,9 +1925,7 @@ AnimatorState:
   m_Name: Attack3
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 7306079793850781157}
-  - {fileID: 6822021536654911531}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -2002,8 +1979,7 @@ AnimatorState:
   m_Name: Skill5_Pull
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 5359784845260995229}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -2029,9 +2005,7 @@ AnimatorState:
   m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -4870383376459763950}
-  - {fileID: 9164427553808946513}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -2101,7 +2075,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword&Shield_Weapon_Sheath
+  m_Name: Weapon_Sheath
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -2230,8 +2204,7 @@ AnimatorState:
   m_Name: Skill2_Slow
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -2248983232208281051}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -2369,3 +2342,4 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+
